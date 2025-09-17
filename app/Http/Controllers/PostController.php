@@ -9,7 +9,7 @@ class PostController extends Controller
 {
     function index() {
         // Eloquent ORM Get all post data from Post model
-        $data =  Post::all();
+        $data =  Post::paginate(10);
         return view('post.index', ['posts'=> $data,'pageTitle' => "Blog Page"]);
     }
 
@@ -20,13 +20,18 @@ class PostController extends Controller
     }
 
     function create() {
-        $post = Post::create([
-            "title" => "my find Post",
-            "body" => "search for something",
-            "author" => "mostafa",
-            "published" => true
-        ]);
-
+        // $post = Post::create([
+        //     "title" => "my second Post",
+        //     "body" => "ho ho ho hooo",
+        //     "author" => "santa",
+        //     "published" => true
+        // ]);
+        $post = Post::factory(100)->create();
         return redirect("/blog");
+    }
+
+    function delete() {
+        Post::destroy(1,2);
+
     }
 }

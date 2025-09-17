@@ -11,8 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('post', function (Blueprint $table) {
-            $table->string('author')->after('title');
+        Schema::create('comment', function (Blueprint $table) {
+             $table->uuid("id")->primary();
+            $table->string('author');
+            $table->string('content');
+            $table->timestamps();
+
+            $table->foreignId("post_id")->constrained("post")->cascadeOnDelete();
         });
     }
 
@@ -21,9 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('post', function (Blueprint $table) {
-            // remove author column
-            $table->dropColumn('author');
-        });
+        Schema::dropIfExists('comment');
     }
 };
