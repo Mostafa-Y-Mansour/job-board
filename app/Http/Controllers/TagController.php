@@ -8,21 +8,69 @@ use Illuminate\Http\Request;
 
 class TagController extends Controller
 {
-    function index() {
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
         // Eloquent ORM Get all post data from Post model
         $data =  Tag::all();
         return view('tag.index', ['tags'=> $data,'pageTitle' => "tags Page"]);
     }
 
-    function create() {
-        $post = Tag::create([
-            "title" => "Software Engineering",
-        ]);
-
-        return redirect("/tags");
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        return view("tag.create",[ 'pageTitle' => 'create tags page' ]);
     }
 
-    function testManyToMany() {
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        // @TODO this will be Completed in the form section
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        //
+        $tag = Tag::findOrFail($id);
+        return view("tag.show", ["pageTitle" => " show tag page!"]);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        //
+        $tag = Tag::findOrFail($id);
+        return view("tag.edit", ["pageTitle" => " edit tag page!"]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        //
+    }
+
+        function testManyToMany() {
         // $post9 = Post::find(9);
         // $post10 = Post::find(10);
 
@@ -49,6 +97,5 @@ class TagController extends Controller
             "explain" => "cant add the same ids for post and tag twice."
         ]);
     }
-
 }
 }
