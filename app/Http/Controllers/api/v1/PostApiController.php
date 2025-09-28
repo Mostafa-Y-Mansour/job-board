@@ -26,7 +26,7 @@ class PostApiController extends Controller
         // return response after creating (201)
 
         $data = Post::create($request->all());
-        return response($data,201);
+        return response($data, 201);
     }
 
     /**
@@ -36,12 +36,12 @@ class PostApiController extends Controller
     {
         //
         $data = Post::find($id);
-        if (!$data)
-        {
-            return response(["message" =>"Not Found"],404);
+        if (!$data) {
+            return response(["message" => "Not Found"], 404);
         }
         return response($data, 200);
     }
+    function man() {}
 
     /**
      * Update the specified resource in storage.
@@ -50,9 +50,8 @@ class PostApiController extends Controller
     {
         //
         $data = Post::find($id);
-        if (!$data)
-        {
-            return response(["message" =>"Not Found"],404);
+        if (!$data) {
+            return response(["message" => "Not Found"], 404);
         }
         $data->update($request->all());
         return response($data, 200);
@@ -65,11 +64,10 @@ class PostApiController extends Controller
     {
         //
         $data = Post::find($id);
-        if (!$data)
-        {
-            return response(["message" =>"Not Found"],404);
+        if (!$data) {
+            return response(["message" => "Not Found"], 404);
         }
         $data->delete();
-        return response(null,204);
+        return response(null, 204);
     }
 }
