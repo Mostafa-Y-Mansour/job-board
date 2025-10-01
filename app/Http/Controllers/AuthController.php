@@ -24,7 +24,7 @@ class AuthController extends Controller
 
         $user->save();
 
-        auth()->login($user);
+        auth("web")->login($user);
 
         // $user->password = bcrypt($request->input("password"));
         return redirect("/");
@@ -38,7 +38,7 @@ class AuthController extends Controller
     public function login(loginRequest $request) // login (POST) the logic for the login request
     {
         $credentials = $request->only("email", "password");
-        if (auth()->attempt($credentials)) {
+        if (auth("web")->attempt($credentials)) {
             $request->session()->regenerate();
             return redirect("/");
         }
@@ -48,7 +48,7 @@ class AuthController extends Controller
 
     public function logout()
     {
-        auth()->logout();
+        auth("web")->logout();
         return redirect("/");
     }
 }

@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Middleware\OnlyMe;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Http\Request;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -17,5 +19,10 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias(["onlyMe" => OnlyMe::class]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        //
+        // handel 401 error for unauthenticated api routes
+        $exceptions->render(function (AuthenticationException $exception, Request $request) {
+            if ($request->is("api/*")) {
+                return response()->json(["message" => "unauthenticated"], 401);
+            }
+        });
     })->create();
