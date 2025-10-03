@@ -23,7 +23,6 @@ class BlogPostRequest extends FormRequest
     {
         return [
             'title' => "bail|required|unique:post,title,{$this->input('id')}", // bail: stop running validation rules after the first validation failure 
-            'author' => 'required',
             'body' => 'required'
         ];
     }

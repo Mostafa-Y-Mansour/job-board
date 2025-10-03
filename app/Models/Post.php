@@ -17,19 +17,31 @@ class Post extends Model
     protected $keyType = 'string'; // default (int)
     public $incrementing = false; // default (true)
 
- 
+
     protected $table = 'post';
 
-    protected $fillable = ['title', 'body', 'published', 'author']; // modifiable fields in the DB that can be updated
+    protected $fillable = ['title', 'body', 'published', "user_id"]; // modifiable fields in the DB that can be updated
 
     protected $guarded = ['id']; // fields that shouldn't be updated/assigned (read only)
 
+    // relationship with other tables
     // post has many comments many of the comment::class
-    public function comments() {
+
+    // many to one relation ship (many posts belong to one user)
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    // one to many relationship (one post has many comments)
+    public function comments()
+    {
         return $this->hasMany(Comment::class);
     }
 
-    public function tags() {
+    // many to many relationship (one post has many tags and one tag has many posts)
+    public function tags()
+    {
         return $this->belongsToMany(Tag::class);
     }
 }
